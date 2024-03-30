@@ -1,6 +1,62 @@
-# https://tea.xyz/what-is-this-file
----
-version: 1.0.0
-codeOwners:
-  - '0x8e51e17eD100925F1C7512EB159CDD7Da9688Ee5'
-quorum: 1
+# EasyToDo - Um aplicativo de lista de tarefas simples e intuitivo.
+
+class Task:
+    def __init__(self, description, category='Geral', priority='Normal'):
+        """
+        Classe para representar uma tarefa na lista de tarefas.
+
+        :param description: Descrição da tarefa.
+        :param category: Categoria da tarefa. Padrão é 'Geral'.
+        :param priority: Prioridade da tarefa. Padrão é 'Normal'.
+        """
+        self.description = description
+        self.category = category
+        self.priority = priority
+        self.completed = False
+
+    def mark_as_completed(self):
+        """Marca a tarefa como concluída."""
+        self.completed = True
+
+class ToDoList:
+    def __init__(self):
+        """Classe para representar a lista de tarefas."""
+        self.tasks = []
+
+    def add_task(self, task):
+        """Adiciona uma tarefa à lista."""
+        self.tasks.append(task)
+
+    def remove_task(self, task):
+        """Remove uma tarefa da lista."""
+        self.tasks.remove(task)
+
+    def get_completed_tasks(self):
+        """Retorna uma lista das tarefas concluídas."""
+        return [task for task in self.tasks if task.completed]
+
+    def get_pending_tasks(self):
+        """Retorna uma lista das tarefas pendentes."""
+        return [task for task in self.tasks if not task.completed]
+
+# Exemplo de uso:
+if __name__ == "__main__":
+    # Cria uma lista de tarefas
+    todo_list = ToDoList()
+
+    # Adiciona algumas tarefas
+    task1 = Task("Fazer compras")
+    task2 = Task("Estudar para o exame de matemática", category="Estudo", priority="Alta")
+
+    todo_list.add_task(task1)
+    todo_list.add_task(task2)
+
+    # Marca a primeira tarefa como concluída
+    todo_list.tasks[0].mark_as_completed()
+
+    # Imprime todas as tarefas na lista
+    print("Lista de Tarefas:")
+    for task in todo_list.tasks:
+        status = "Concluída" if task.completed else "Pendente"
+        print(f"- {task.description} ({task.category}, {task.priority}): {status}")
+
